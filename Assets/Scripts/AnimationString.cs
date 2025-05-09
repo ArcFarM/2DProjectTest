@@ -13,7 +13,17 @@ namespace FlatformerTest {
         public static string isground = "IsGround";
         public static string isceiling = "IsCeiling";
         public static string iswall = "IsWall";
+        public static string cannotmove = "CannotMove";
         //공격 관련
         public static string groundattack = "GroundAttack";
+        //플레이어 사망
+        public static string isdead = "IsDead";
+
+        #region Enemy
+        //적이 플레이어 발견
+        public static string findplayer = "FindPlayer";
+        //적이 공격
+        public static string enemyattack = "EnemyAttack";
+        #endregion
     }
 }

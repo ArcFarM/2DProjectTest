@@ -50,6 +50,8 @@ namespace FlatformerTest {
 
         public float GetSpeed {
             get {
+                if(CannotMove) return 0f; //움직일 수 없는 상태일 시 속도 0
+
                 if (IsMoving && !cc.IsWall) {
                     //공중에 떠 있을 시
                     if (!cc.IsGround) {
@@ -73,6 +75,10 @@ namespace FlatformerTest {
                 isFacingRight = value;
 
             }
+        }
+
+        public bool CannotMove {
+            get => animator.GetBool(AnimationString.cannotmove);
         }
         #endregion
 
