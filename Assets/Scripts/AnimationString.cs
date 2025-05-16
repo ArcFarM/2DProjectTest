@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Unity.Collections;
+using UnityEngine;
 
 namespace FlatformerTest {
 
@@ -16,6 +17,10 @@ namespace FlatformerTest {
         public static string cannotmove = "CannotMove";
         //공격 관련
         public static string groundattack = "GroundAttack";
+        //플레이어 피격
+        public static string gethit = "GetHit";
+        public static string playerhitdelay = "HitCoolDown";
+        public static string lockspeed = "LockSpeed";
         //플레이어 사망
         public static string isdead = "IsDead";
 
@@ -24,6 +29,7 @@ namespace FlatformerTest {
         public static string findplayer = "FindPlayer";
         //적이 공격
         public static string enemyattack = "EnemyAttack";
+        public static string enemyatkcd = "AttackCoolDown";
         #endregion
     }
 }

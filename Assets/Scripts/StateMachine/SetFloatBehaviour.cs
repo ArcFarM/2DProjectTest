@@ -1,22 +1,27 @@
 ﻿using UnityEngine;
 
 namespace FlatformerTest {
-    public class AttackBehaviour : StateMachineBehaviour {
+    public class SetFloatBehaviour : StateMachineBehaviour {
+        //float 형 파라미터를 관리하는 behaviour
+
         #region Variables
         //제어할 Animator 내의 Parameter
-        [SerializeField] string boolParam;
+        [SerializeField] string floatParam;
         //상태머신 점검
-        public bool updateOnState;
-        public bool updateOnStateMachine;
+        public bool updateOnStateEnter;
+        public bool updateOnStateExit;
+        public bool updateOnStateMachineEnter;
+        public bool updateOnStateMachineExit;
         //Parameter가 제어될 값
-        public bool valueEnter;
-        public bool valueExit;
-
+        public float valueEnter;
+        public float valueExit;
         #endregion
+
         // OnStateEnter is called before OnStateEnter is called on any state inside this state machine
-        override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
-            if(updateOnState) {
-                animator.SetBool(boolParam, valueEnter);
+        override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+        {
+            if(updateOnStateEnter) {
+                animator.SetFloat(floatParam, valueEnter);
             }
         }
 
@@ -26,11 +31,11 @@ namespace FlatformerTest {
         //    
         //}
 
-        //OnStateExit is called before OnStateExit is called on any state inside this state machine
+        // OnStateExit is called before OnStateExit is called on any state inside this state machine
         override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-          if(updateOnState) {
-                animator.SetBool(boolParam, valueExit);
+            if(updateOnStateExit) {
+                animator.SetFloat(floatParam, valueExit);
             }
         }
 
@@ -49,16 +54,16 @@ namespace FlatformerTest {
         // OnStateMachineEnter is called when entering a state machine via its Entry Node
         override public void OnStateMachineEnter(Animator animator, int stateMachinePathHash)
         {
-            if(updateOnStateMachine) {
-                animator.SetBool(boolParam, valueEnter);
+            if(updateOnStateMachineEnter) {
+                animator.SetFloat(floatParam, valueEnter);
             }
         }
 
         // OnStateMachineExit is called when exiting a state machine via its Exit Node
         override public void OnStateMachineExit(Animator animator, int stateMachinePathHash)
         {
-            if(updateOnStateMachine) {
-                animator.SetBool(boolParam, valueExit);
+            if(updateOnStateMachineExit) {
+                animator.SetFloat(floatParam, valueExit);
             }
         }
     }

@@ -29,6 +29,9 @@ namespace FlatformerTest {
         //벽타기와 땅 닿는거 판정 용
         [SerializeField] CheckCollision cc;
 
+        //플레이어의 능력치와 관련된 것들
+        [SerializeField] PlayerGetHit ps;
+        
         #endregion
 
         #region Property
@@ -86,16 +89,23 @@ namespace FlatformerTest {
         private void Start() {
             rb2d = GetComponent<Rigidbody2D>();
             animator = GetComponent<Animator>();
+            ps = GetComponent<PlayerGetHit>();
+            ps.HitAction += OnHit;
         }
 
         private void FixedUpdate() {
-            rb2d.linearVelocity = new Vector2(inputVector.x * GetSpeed, rb2d.linearVelocity.y);
-            animator.SetFloat(AnimationString.yvelocity, rb2d.linearVelocityY);
+            if (!ps.LockSpeed) {
+                rb2d.linearVelocity = new Vector2(inputVector.x * GetSpeed, rb2d.linearVelocity.y);
+            }
+                animator.SetFloat(AnimationString.yvelocity, rb2d.linearVelocityY);
         }
         #endregion
 
         #region Custom Method
         public void OnMove(InputAction.CallbackContext context) {
+            if (true) {
+
+            }
             //입력값을 받아옴
             inputVector = context.ReadValue<Vector2>();
             IsMoving = (inputVector != Vector2.zero);
@@ -144,6 +154,11 @@ namespace FlatformerTest {
                 //TODO : 공격 도중 점프 불가
 
             }
+        }
+
+        public void OnHit(float dmg, Vector2 knockback) {
+            //이동할 수 없고 오직 넉백 벡터로만 이동
+            rb2d.linearVelocity = new Vector2(knockback.x, rb2d.linearVelocityY + knockback.y);
         }
         #endregion
     }

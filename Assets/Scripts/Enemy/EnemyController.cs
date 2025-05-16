@@ -21,6 +21,9 @@ namespace FlatformerTest {
         //플레이어 감지
         [SerializeField] Detector detector;
         bool findplayer = false;
+
+        //공격 재사용 대기 시간
+        float attackCooldown;
         #endregion
 
         #region Property
@@ -35,7 +38,7 @@ namespace FlatformerTest {
 
         public float GetSpeed {
             get {
-                if (cc.IsWall || FindPlayer) return 0f;
+                if (cc.IsWall || (GetCooldown < 0.01 && FindPlayer)) return 0f;
                 return runSpeed;
             }
         }
@@ -49,16 +52,26 @@ namespace FlatformerTest {
         public bool CannotMove {
             get => animator.GetBool(AnimationString.cannotmove);
         }
+        public float GetCooldown {
+            get => animator.GetFloat(AnimationString.enemyatkcd);
+            set => animator.SetFloat(AnimationString.enemyatkcd, value);
+        }
         #endregion
 
         #region Unity Event Method
         private void Start() {
             rb2d = GetComponent<Rigidbody2D>();
+            attackCooldown = EnemyAttack.attackCooldown;
         }
 
         private void Update() {
             //플레이어가 감지되면 공격 명령 실행
             FindPlayer = detector.contactedList.Count > 0;
+            //공격 재사용 대기 시간
+            if (GetCooldown > 0) {
+                GetCooldown -= Time.deltaTime;
+            }
+            //재사용 대기 시간 초기화는 SetFloatBehaviour에서 실행
         }
 
         private void FixedUpdate() {
